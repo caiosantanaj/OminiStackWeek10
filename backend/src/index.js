@@ -4,6 +4,7 @@ const routes = require("./routes");
 
 const express = require("express");     //Import ExpressJs module
 const mongoose = require("mongoose");   //DB Connection
+const cors = require("cors");
 
 //Create a new express aplication
 const app = express();
@@ -15,6 +16,8 @@ mongoose.connect(constantsFile.dbUrl, {
     useUnifiedTopology: true
 });
 
+//
+app.use(cors())
 //Define a rule to be used in the aplication
 app.use(express.json());
 //Use the routes in the other file
