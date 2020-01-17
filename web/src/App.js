@@ -116,17 +116,17 @@ function App() {
       
       <main>
         <ul>
-          { devs.map(dev => (
-            <li className="dev-item" key={dev._id}>
+          { devs.map(user => (
+            <li className="dev-item" key={user._id}>
               <header>
-                <img src={ dev.avatar_url } alt="avatar github"/>
+                <img src={ user.avatar_url } alt="avatar github"/>
                 <div className="user-info">
-                  <strong>{ dev.name }</strong>
-                  <span>{ /*devs.techs.join(" ")*/ }</span>
+                  <strong>{ user.name }</strong>
+                  <span>{ user.techs.join(", ") }</span>
                 </div>
               </header>
-              <p>{ devs.bio }</p>
-              <a href={ `www.github.com/${devs.github_username}` }>Acessar perfil GitHub</a>
+              <p>{ user.bio }</p>
+              <a href={ `www.github.com/${user.github_username}` }>Acessar perfil GitHub</a>
             </li>
           ))}
         </ul>
