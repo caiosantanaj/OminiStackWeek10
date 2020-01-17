@@ -7,6 +7,8 @@ import './Sidebar.css'
 import './Main.css'
 
 function App() {
+  const [devs, setDevs] = useState([]);
+
   const [github_username, setGithubUsername] = useState("");
   const [techs, setTechs] = useState("");
 
@@ -32,6 +34,16 @@ function App() {
     )
   }, []);
 
+  useEffect(() => {
+    async function loadDevs(){
+      const response = await api.get("/devs");
+
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  }, []);
+
   async function handleAddDev(e) {
     e.preventDefault(); //previne o comportamento padrão
 
@@ -42,7 +54,8 @@ function App() {
       longitude
     });
 
-    console.log(response.data)
+    setGithubUsername('');
+    setTechs('');
   }
 
   return (
@@ -103,41 +116,19 @@ function App() {
       
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/23464520?s=460&v=4" alt="github perfil"/>
-              <div className="user-info">
-                <strong>Caio Jacobina</strong>
-                <span>ReactJs, React Native, Node.Js</span>
-              </div>
-            </header>
-            <p>Descrição GitHub</p>
-            <a href="https://github.com/caiosantanaj">Acessar perfil GitHub</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/23464520?s=460&v=4" alt="github perfil"/>
-              <div className="user-info">
-                <strong>Caio Jacobina</strong>
-                <span>ReactJs, React Native, Node.Js</span>
-              </div>
-            </header>
-            <p>Descrição GitHub</p>
-            <a href="https://github.com/caiosantanaj">Acessar perfil GitHub</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/23464520?s=460&v=4" alt="github perfil"/>
-              <div className="user-info">
-                <strong>Caio Jacobina</strong>
-                <span>ReactJs, React Native, Node.Js</span>
-              </div>
-            </header>
-            <p>Descrição GitHub</p>
-            <a href="https://github.com/caiosantanaj">Acessar perfil GitHub</a>
-          </li>
+          { devs.map(dev => (
+            <li className="dev-item" key={dev._id}>
+              <header>
+                <img src={ dev.avatar_url } alt="avatar github"/>
+                <div className="user-info">
+                  <strong>{ dev.name }</strong>
+                  <span>{ /*devs.techs.join(" ")*/ }</span>
+                </div>
+              </header>
+              <p>{ devs.bio }</p>
+              <a href={ `www.github.com/${devs.github_username}` }>Acessar perfil GitHub</a>
+            </li>
+          ))}
         </ul>
       </main>
     </div>

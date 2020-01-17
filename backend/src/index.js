@@ -16,8 +16,8 @@ mongoose.connect(constantsFile.dbUrl, {
     useUnifiedTopology: true
 });
 
-//
-app.use(cors())
+//Da acesso apenas ao seguinte
+app.use(cors({ origin: "http://localhost:3000" }))
 //Define a rule to be used in the aplication
 app.use(express.json());
 //Use the routes in the other file
